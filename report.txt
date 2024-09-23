@@ -1,0 +1,175 @@
+select dc.*,v.vstdate,v.age_y,v.pdx,i.*,date(date2)-date(date1) as cnt,s.name as sex_name,
+o.bw,o.bps,o.bpd ,o.pulse,o.temperature,o.rr,o.waist ,o.height,o.bmi , pr.sub_regiment , o.smoking_type_id , o.drinking_type_id
+from doctor_cert dc
+left outer join vn_stat v on dc.vn = v.vn
+left outer join icd101 i on v.pdx =i.code
+left outer join sex s on s.code = v.sex
+left outer join opdscreen o on dc.vn = o.vn
+left outer join patient_regiment pr on pr.hn = v.hn
+WHERE YEAR(o.vstdate) = YEAR(CURDATE())
+
+-----------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------
+
+580012118, 570004499, 610000973, 580004507
+
+-----------------------------------------------------------------------------------------------
+SELECT
+pt.cid,
+vs.vn,
+vs.hn,
+CONCAT(pt.pname, pt.fname, ' ', pt.lname) AS fullname,
+pt.hometel,
+os.height,
+os.bw,
+s.`name`,
+vs.age_y,
+os.bmi,
+os.bps,
+os.bpd,
+os.waist,
+vs.vstdate,
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=76
+) AS 'FBS',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=77
+) AS 'BUN',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=78
+) AS 'Cr',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=841
+) AS 'Chol',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=843
+) AS 'TG',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=79
+) AS 'Uricacid',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=302
+) AS 'ALK',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=300
+) AS 'AST',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=301
+) AS 'ALT',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=4
+) AS 'Hct',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=41
+) AS 'Color',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=42
+) AS 'App',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=44
+) AS 'Ph',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=43
+) AS 'Spg',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=45
+) AS 'Pro',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=51
+) AS 'Bld',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=53
+) AS 'WBC',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=52
+) AS 'RBC',
+( SELECT lo.lab_order_result 
+	FROM lab_head AS lh 
+	LEFT OUTER JOIN lab_order AS lo ON (lh.lab_order_number=lo.lab_order_number)
+	WHERE lh.vn = vs.vn AND lo.lab_items_code=54
+) AS 'EPI',
+( SELECT xp.priority_name 
+	FROM xray_report AS xr
+	LEFT OUTER JOIN xray_priority AS xp ON xp.xray_priority_id = xr.xray_priority_id
+	WHERE xr.vn = vs.vn
+) AS 'xray'
+FROM vn_stat AS vs
+LEFT OUTER JOIN opdscreen AS os ON vs.vn = os.vn
+LEFT OUTER JOIN sex AS s ON s.`code` = vs.sex
+LEFT OUTER JOIN patient AS pt ON pt.hn = vs.hn
+LEFT OUTER JOIN lab_head AS lh ON lh.vn = vs.vn
+WHERE YEAR(vs.vstdate) = '2023' AND vs.pttype = '44'
+AND pt.cid = '3330101450747'
+
+----------------------------------------------------------------
+
+SELECT 
+lo.lab_items_code,
+li.lab_items_name, 
+lo.lab_order_number, 
+lo.lab_items_name_ref,
+lo.lab_order_result, 
+lo.lab_items_normal_value_ref 
+FROM lab_order AS lo
+JOIN lab_items AS li ON li.lab_items_code = lo.lab_items_code
+WHERE lab_order_number = '284781'
+
+-----------------------------------------------------------------
+
+SELECT lh.vn,lh.hn,lo.lab_items_code,li.lab_items_name,lo.lab_order_result FROM lab_head lh 
+LEFT JOIN lab_order lo on lo.lab_order_number=lh.lab_order_number
+LEFT JOIN lab_items li on li.lab_items_code = lo.lab_items_code
+WHERE vn = '661025075246'
+AND lo.lab_order_result <>''
+
+select xr.vn,xr.hn,xr.xray_priority_id,xp.priority_name from xray_report xr
+LEFT JOIN xray_priority xp on xp.xray_priority_id = xr.xray_priority_id
+WHERE vn = '661025075246'
+
+
+
+
+
+
+
+
+
+
+
